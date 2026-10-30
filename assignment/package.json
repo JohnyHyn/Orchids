@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "^2.1.2",
     "@ant-design/icons": "^6.3.4",
     "@react-oauth/google": "^0.13.5",
     "@tailwindcss/vite": "^4.3.3",
+    "animejs": "^4.5.0",
     "antd": "^6.6.8",
     "axios": "^1.21.0",
     "jwt-decode": "^4.0.0",

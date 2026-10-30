@@ -1,1 +1,107 @@
+/* Thứ tự layer: antd nằm giữa base và utilities -> class Tailwind ghi đè được style antd */
+@layer theme, base, antd, components, utilities;
+
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-brand: "Cinzel", "Playfair Display", Georgia, serif;
+
+  /* Vàng kim (Champagne Gold) */
+  --color-gold-50: #fbf7ea;
+  --color-gold-100: #f5ebc8;
+  --color-gold-200: #ecd894;
+  --color-gold-300: #e2c25f;
+  --color-gold-400: #d4af37;
+  --color-gold-500: #b8942b;
+  --color-gold-600: #977722;
+  --color-gold-700: #74591b;
+  --color-gold-800: #4f3d14;
+  --color-gold-900: #2e240c;
+  --color-gold-950: #1a1407;
+
+  /* Đen huyền (Onyx) */
+  --color-ink-500: #3a3a40;
+  --color-ink-600: #2a2a2f;
+  --color-ink-700: #1f1f23;
+  --color-ink-800: #18181b;
+  --color-ink-850: #131315;
+  --color-ink-900: #0e0e10;
+  --color-ink-950: #070708;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  background-image:
+    radial-gradient(60rem 30rem at 50% -10%, rgb(212 175 55 / 0.08), transparent 70%),
+    radial-gradient(40rem 30rem at 100% 100%, rgb(212 175 55 / 0.04), transparent 70%);
+  background-attachment: fixed;
+  color: var(--color-stone-200);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(212 175 55 / 0.35);
+  color: #fff;
+}
+
+::-webkit-scrollbar { width: 10px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-ink-950); }
+::-webkit-scrollbar-thumb { background: var(--color-ink-600); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold-700); }
+
+/* Chữ vàng kim ánh kim loại */
+.text-gold {
+  background-image: linear-gradient(100deg, #f5ebc8 0%, #e2c25f 30%, #d4af37 55%, #977722 80%, #e2c25f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Huy hiệu vàng kim lấp lánh (Đặc Biệt / Admin) */
+@keyframes gold-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.badge-gold {
+  background-image: linear-gradient(110deg, #977722 0%, #d4af37 30%, #f5ebc8 50%, #d4af37 70%, #977722 100%);
+  background-size: 200% 100%;
+  animation: gold-shimmer 3.5s linear infinite;
+}
+
+/* Đường kẻ vàng mảnh trang trí */
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(212 175 55 / 0.6), transparent);
+}
+
+/* Chữ tiêu đề Landing (tách từng ký tự bằng AnimeJS splitText) */
+.lp-char {
+  display: inline-block;
+  background-image: linear-gradient(180deg, #fbf7ea 0%, #e2c25f 40%, #d4af37 65%, #977722 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+/* Fade-in nhẹ khi nội dung xuất hiện */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge-gold, .animate-fade-up { animation: none; }
+}

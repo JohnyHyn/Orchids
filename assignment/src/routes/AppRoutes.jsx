@@ -9,9 +9,13 @@ import LoginPage from '../features/auth/pages/LoginPage';
 import ProtectedRoute from '../components/guards/ProtectedRoute';
 import AboutPage from '../features/about/pages/AboutPage';
 import ContactPage from '../features/contact/pages/ContactPage';
+import LandingPage from '../features/landing/pages/LandingPage';
 const AppRoutes = () => {
     return (
         <Routes>
+            {/* Landing Page giới thiệu (toàn màn hình, không dùng MainLayout) */}
+            <Route path="/welcome" element={<LandingPage />} />
+
             <Route path="/" element={<MainLayout />}>
                 {/* Public Routes */}
                 <Route index element={<HomePage />} />

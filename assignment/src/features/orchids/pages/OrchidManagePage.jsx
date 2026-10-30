@@ -10,17 +10,30 @@ import {
     Switch,
     Space,
     Popconfirm,
-    Tag,
     Image,
     message,
-    Typography,
+    Tooltip,
 } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined, StarFilled } from '@ant-design/icons';
+import {
+    PlusOutlined,
+    EditOutlined,
+    DeleteOutlined,
+    StarFilled,
+    CrownFilled,
+    AppstoreOutlined,
+    SearchOutlined,
+    EnvironmentOutlined,
+    PictureOutlined,
+    DollarOutlined,
+} from '@ant-design/icons';
 import orchidService from '../services/orchidService';
 import categoryService from '../../categories/services/categoryService';
 
-const { Title } = Typography;
 const { TextArea } = Input;
+
+const IMAGE_FALLBACK = `data:image/svg+xml;utf8,${encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"><rect width="56" height="56" fill="#18181b"/><text x="50%" y="62%" font-size="24" text-anchor="middle">🌸</text></svg>'
+)}`;
 
 const OrchidManagePage = () => {
     const [orchids, setOrchids] = useState([]);
@@ -28,7 +41,9 @@ const OrchidManagePage = () => {
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingOrchid, setEditingOrchid] = useState(null);
+    const [keyword, setKeyword] = useState('');
     const [form] = Form.useForm();
+    const previewImage = Form.useWatch('image', form);
 
     // 1. Tải danh sách Hoa Lan & Danh Mục từ API
     const fetchData = async () => {
@@ -115,21 +130,40 @@ const OrchidManagePage = () => {
         }
     };
 
+    // Lọc nhanh trên bảng theo tên / danh mục / xuất xứ
+    const tableData = orchids.filter((item) =>
+        [item.orchidName, item.category, item.original]
+            .filter(Boolean)
+            .some((field) => String(field).toLowerCase().includes(keyword.toLowerCase()))
+    );
+
+    const stats = [
+        { label: 'Tổng số hoa lan', value: orchids.length, icon: <AppstoreOutlined />, tone: 'from-gold-300 to-gold-600' },
+        { label: 'Lan đặc biệt', value: orchids.filter((o) => o.isSpecial).length, icon: <CrownFilled />, tone: 'from-gold-100 to-gold-400' },
+        {
+            label: 'Tổng lượt đánh giá',
+            value: orchids.reduce((sum, o) => sum + (Array.isArray(o.feedback) ? o.feedback.length : 0), 0),
+            icon: <StarFilled />,
+            tone: 'from-stone-300 to-stone-500',
+        },
+    ];
+
     // Cấu hình bảng hiển thị
     const columns = [
         {
             title: 'Hình ảnh',
             dataIndex: 'image',
             key: 'image',
-            width: 80,
+            width: 90,
             render: (img, record) => (
                 <Image
-                    src={img || 'https://via.placeholder.com/60?text=No+Img'}
+                    src={img}
                     alt={record.orchidName}
-                    width={50}
-                    height={50}
-                    className="rounded-lg object-cover"
-                    fallback="https://via.placeholder.com/60?text=Error"
+                    width={44}
+                    height={44}
+                    className="rounded-md object-cover"
+                    rootClassName="overflow-hidden rounded-md ring-1 ring-white/10"
+                    fallback={IMAGE_FALLBACK}
                 />
             ),
         },
@@ -137,13 +171,14 @@ const OrchidManagePage = () => {
             title: 'Tên hoa lan',
             dataIndex: 'orchidName',
             key: 'orchidName',
+            sorter: (a, b) => (a.orchidName || '').localeCompare(b.orchidName || ''),
             render: (text, record) => (
-                <div>
-                    <span className="font-semibold text-gray-800">{text}</span>
+                <div className="flex flex-col gap-1">
+                    <span className="font-semibold text-stone-100">{text}</span>
                     {record.isSpecial && (
-                        <Tag color="red" className="ml-2 text-xs">
-                            Đặc biệt
-                        </Tag>
+                        <span className="badge-gold inline-flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink-950">
+                            <CrownFilled /> Đặc biệt
+                        </span>
                     )}
                 </div>
             ),
@@ -152,18 +187,30 @@ const OrchidManagePage = () => {
             title: 'Danh mục',
             dataIndex: 'category',
             key: 'category',
-            render: (cat) => <Tag color="emerald">{cat}</Tag>,
+            filters: categories.map((c) => ({ text: c.name, value: c.name })),
+            onFilter: (value, record) => record.category === value,
+            render: (cat) => (
+                <span className="rounded-full bg-gold-400/10 px-2.5 py-1 text-xs font-medium text-gold-400 ring-1 ring-gold-400/20">
+                    {cat}
+                </span>
+            ),
         },
         {
             title: 'Giá ($)',
             dataIndex: 'price',
             key: 'price',
-            render: (val) => <span className="font-bold text-emerald-600">${val?.toLocaleString()}</span>,
+            sorter: (a, b) => (Number(a.price) || 0) - (Number(b.price) || 0),
+            render: (val) => <span className="font-bold text-gold-400">${val?.toLocaleString()}</span>,
         },
         {
             title: 'Xuất xứ',
             dataIndex: 'original',
             key: 'original',
+            render: (val) => (
+                <span className="flex items-center gap-1 text-stone-400">
+                    <EnvironmentOutlined className="text-stone-500" /> {val || '—'}
+                </span>
+            ),
         },
         {
             title: 'Đánh giá',
@@ -174,8 +221,8 @@ const OrchidManagePage = () => {
                     ? (feedbacks.reduce((sum, item) => sum + (Number(item.rating) || 0), 0) / feedbacks.length).toFixed(1)
                     : 0;
                 return (
-                    <span className="flex items-center gap-1 text-xs text-amber-500 font-semibold">
-                        <StarFilled /> {avg} ({feedbacks.length})
+                    <span className="inline-flex items-center gap-1 rounded-full bg-gold-400/10 px-2.5 py-1 text-xs font-semibold text-gold-400">
+                        <StarFilled /> {avg} <span className="font-normal text-gold-400/70">({feedbacks.length})</span>
                     </span>
                 );
             },
@@ -183,14 +230,18 @@ const OrchidManagePage = () => {
         {
             title: 'Hành động',
             key: 'action',
-            width: 140,
+            width: 120,
+            align: 'center',
             render: (_, record) => (
-                <Space size="middle">
-                    <Button
-                        type="text"
-                        icon={<EditOutlined className="text-blue-600" />}
-                        onClick={() => handleEdit(record)}
-                    />
+                <Space size="small">
+                    <Tooltip title="Chỉnh sửa">
+                        <Button
+                            shape="circle"
+                            icon={<EditOutlined />}
+                            className="text-gold-400!"
+                            onClick={() => handleEdit(record)}
+                        />
+                    </Tooltip>
                     <Popconfirm
                         title="Xóa hoa lan"
                         description="Bạn có chắc chắn muốn xóa hoa lan này không?"
@@ -199,7 +250,9 @@ const OrchidManagePage = () => {
                         cancelText="Hủy"
                         okButtonProps={{ danger: true }}
                     >
-                        <Button type="text" icon={<DeleteOutlined className="text-red-500" />} />
+                        <Tooltip title="Xóa">
+                            <Button shape="circle" danger icon={<DeleteOutlined />} />
+                        </Tooltip>
                     </Popconfirm>
                 </Space>
             ),
@@ -207,44 +260,76 @@ const OrchidManagePage = () => {
     ];
 
     return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-center">
+        <div className="space-y-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <Title level={2} className="!mb-1">Quản lý Hoa Lan</Title>
-                    <p className="text-gray-500 text-sm">Xem, thêm mới, cập nhật giá và xóa các loại hoa lan</p>
+                    <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold-400">Quản trị</p>
+                    <h1 className="font-display text-2xl font-bold text-stone-100">Quản lý Hoa Lan</h1>
+                    <p className="mt-1 text-sm text-stone-400">Xem, thêm mới, cập nhật giá và xóa các loại hoa lan</p>
                 </div>
-                <Button
-                    type="primary"
-                    icon={<PlusOutlined />}
-                    size="large"
-                    className="bg-emerald-600 hover:bg-emerald-700"
-                    onClick={handleAdd}
-                >
+                <Button type="primary" icon={<PlusOutlined />} size="large" onClick={handleAdd}>
                     Thêm Hoa Lan
                 </Button>
             </div>
 
-            <Table
-                columns={columns}
-                dataSource={orchids}
-                rowKey="id"
-                loading={loading}
-                className="bg-white rounded-2xl shadow-sm border overflow-hidden"
-            />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {stats.map((stat) => (
+                    <div key={stat.label} className="flex items-center gap-4 rounded-lg border border-gold-400/15 bg-ink-900 px-4 py-3 shadow-sm">
+                        <span className={`flex h-10 w-10 items-center justify-center rounded-md bg-linear-to-br text-lg text-ink-950 shadow-md shadow-gold-500/10 ${stat.tone}`}>
+                            {stat.icon}
+                        </span>
+                        <div>
+                            <p className="text-xs text-stone-400">{stat.label}</p>
+                            <p className="text-gold font-display text-2xl font-bold">{loading ? '—' : stat.value}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <div className="overflow-hidden rounded-lg border border-white/8 bg-ink-900 shadow-sm">
+                <div className="flex flex-col gap-3 border-b border-white/8 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                    <h2 className="font-semibold text-stone-200">Danh sách hoa lan</h2>
+                    <Input
+                        placeholder="Tìm theo tên, danh mục, xuất xứ..."
+                        prefix={<SearchOutlined className="text-stone-500" />}
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                        allowClear
+                        variant="filled"
+                        className="sm:max-w-xs"
+                    />
+                </div>
+                <Table
+                    columns={columns}
+                    dataSource={tableData}
+                    rowKey="id"
+                    loading={loading}
+                    scroll={{ x: 900 }}
+                    pagination={{ pageSize: 8, showTotal: (total) => `Tổng ${total} hoa lan`, className: 'px-4' }}
+                />
+            </div>
 
             {/* Modal Thêm / Sửa Hoa Lan */}
             <Modal
-                title={editingOrchid ? 'Chỉnh sửa Hoa Lan' : 'Thêm mới Hoa Lan'}
+                title={
+                    <span className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-gold-400/10 text-gold-400">
+                            {editingOrchid ? <EditOutlined /> : <PlusOutlined />}
+                        </span>
+                        {editingOrchid ? 'Chỉnh sửa Hoa Lan' : 'Thêm mới Hoa Lan'}
+                    </span>
+                }
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 onOk={() => form.submit()}
                 okText="Lưu dữ liệu"
                 cancelText="Hủy"
-                width={650}
-                okButtonProps={{ className: 'bg-emerald-600 hover:bg-emerald-700' }}
+                width={760}
+                forceRender
             >
-                <Form form={form} layout="vertical" onFinish={handleFormSubmit} className="mt-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Form form={form} layout="vertical" onFinish={handleFormSubmit} className="mt-5!">
+                    <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-stone-500">Thông tin cơ bản</p>
+                    <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
                         <Form.Item
                             label="Tên hoa lan"
                             name="orchidName"
@@ -263,36 +348,53 @@ const OrchidManagePage = () => {
                                 options={categories.map((c) => ({ value: c.name, label: c.name }))}
                             />
                         </Form.Item>
-                    </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Form.Item
                             label="Giá bán ($)"
                             name="price"
                             rules={[{ required: true, message: 'Vui lòng nhập giá bán!' }]}
                         >
-                            <InputNumber min={0} className="w-full" placeholder="Ví dụ: 120" />
+                            <InputNumber
+                                min={0}
+                                className="w-full!"
+                                prefix={<DollarOutlined className="text-stone-500" />}
+                                placeholder="Ví dụ: 120"
+                            />
                         </Form.Item>
 
                         <Form.Item label="Xuất xứ" name="original">
-                            <Input placeholder="Ví dụ: Vietnam, Thailand..." />
+                            <Input prefix={<EnvironmentOutlined className="text-stone-500" />} placeholder="Ví dụ: Vietnam, Thailand..." />
                         </Form.Item>
                     </div>
 
-                    <Form.Item
-                        label="URL Hình ảnh"
-                        name="image"
-                        rules={[{ required: true, message: 'Vui lòng nhập URL ảnh!' }]}
-                    >
-                        <Input placeholder="https://images.unsplash.com/..." />
-                    </Form.Item>
+                    <p className="mb-3 mt-2 text-xs font-semibold uppercase tracking-wider text-stone-500">Hình ảnh & mô tả</p>
+                    <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-[1fr_140px]">
+                        <div>
+                            <Form.Item
+                                label="URL Hình ảnh"
+                                name="image"
+                                rules={[{ required: true, message: 'Vui lòng nhập URL ảnh!' }]}
+                            >
+                                <Input prefix={<PictureOutlined className="text-stone-500" />} placeholder="https://images.unsplash.com/..." />
+                            </Form.Item>
 
-                    <Form.Item label="Lan đặc biệt (Đột biến / Quý hiếm)" name="isSpecial" valuePropName="checked">
-                        <Switch checkedChildren="Có" unCheckedChildren="Không" />
-                    </Form.Item>
+                            <Form.Item label="Lan đặc biệt (Đột biến / Quý hiếm)" name="isSpecial" valuePropName="checked">
+                                <Switch checkedChildren="Có" unCheckedChildren="Không" />
+                            </Form.Item>
+                        </div>
+                        <div className="mb-6 flex aspect-square items-center justify-center overflow-hidden rounded-md border border-dashed border-white/12 bg-ink-850 sm:mt-7">
+                            {previewImage ? (
+                                <img src={previewImage} alt="Xem trước" className="h-full w-full object-cover" />
+                            ) : (
+                                <span className="px-2 text-center text-xs text-stone-500">
+                                    <PictureOutlined className="mb-1 block text-2xl" /> Xem trước ảnh
+                                </span>
+                            )}
+                        </div>
+                    </div>
 
                     <Form.Item label="Mô tả chi tiết" name="description">
-                        <TextArea rows={3} placeholder="Mô tả chi tiết về cách chăm sóc, hương thơm..." />
+                        <TextArea rows={4} placeholder="Mô tả chi tiết về cách chăm sóc, hương thơm..." />
                     </Form.Item>
                 </Form>
             </Modal>
@@ -301,3 +403,4 @@ const OrchidManagePage = () => {
 };
 
 export default OrchidManagePage;
+

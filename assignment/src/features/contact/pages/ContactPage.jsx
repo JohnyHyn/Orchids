@@ -1,9 +1,14 @@
 import { useState } from 'react';
-import { Card, Form, Input, Select, Button, Row, Col, Typography, message } from 'antd';
-import { PhoneOutlined, MailOutlined, EnvironmentOutlined, SendOutlined } from '@ant-design/icons';
+import { Form, Input, Select, Button, message } from 'antd';
+import { PhoneOutlined, MailOutlined, EnvironmentOutlined, SendOutlined, ClockCircleOutlined } from '@ant-design/icons';
 
-const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
+
+const contactInfo = [
+    { icon: <EnvironmentOutlined />, text: 'Khu Công Nghệ Cao, TP. Thủ Đức, TP. Hồ Chí Minh' },
+    { icon: <PhoneOutlined />, text: 'Hotline / Zalo: 091 937 5697 (Hỗ trợ 24/7)' },
+    { icon: <MailOutlined />, text: 'nhuynh1307@gmail.com' },
+];
 
 const ContactPage = () => {
     const [form] = Form.useForm();
@@ -20,80 +25,65 @@ const ContactPage = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8 py-6">
+        <div className="space-y-6">
             <div className="text-center">
-                <Title level={2} className="!mb-2 text-gray-800">Liên Hệ & Tư Vấn Hoa Lan</Title>
-                <p className="text-gray-500 max-w-xl mx-auto">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold-400">Liên hệ</p>
+                <h1 className="font-display text-3xl font-bold text-stone-50">Liên Hệ & Tư Vấn Hoa Lan</h1>
+                <p className="mx-auto mt-1 max-w-xl text-sm text-stone-400">
                     Bạn muốn mua hoa lan, cần tư vấn cách chăm sóc hoặc muốn đăng ký ký gửi hoa lan lên hệ thống? Hãy để lại thông tin!
                 </p>
             </div>
 
-            <Row gutter={[32, 32]}>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-[5fr_7fr]">
                 {/* Cột trái: Thông tin liên hệ trực tiếp */}
-                <Col xs={24} md={10}>
-                    <div className="bg-emerald-800 text-white p-8 rounded-3xl h-full flex flex-col justify-between shadow-md space-y-8">
-                        <div>
-                            <h3 className="text-2xl font-bold mb-4">Thông Tin Vườn Lan</h3>
-                            <p className="text-emerald-100 text-sm leading-relaxed mb-6">
-                                Mời bạn ghé thăm trực tiếp khu bảo tồn và vườn ươm để chiêm ngưỡng những tác phẩm hoa lan tuyệt đẹp.
-                            </p>
+                <div className="relative flex flex-col justify-between overflow-hidden rounded-lg border border-gold-400/20 bg-linear-to-br from-ink-900 via-ink-950 to-gold-950 p-6 shadow-2xl shadow-black/50">
+                    <div
+                        className="pointer-events-none absolute inset-0 opacity-[0.1]"
+                        style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #d4af37 1px, transparent 0)', backgroundSize: '24px 24px' }}
+                    />
+                    <div className="relative">
+                        <h2 className="text-gold mb-2 font-display text-2xl font-bold">Thông Tin Vườn Lan</h2>
+                        <p className="mb-5 text-sm leading-relaxed text-stone-400">
+                            Mời bạn ghé thăm trực tiếp khu bảo tồn và vườn ươm để chiêm ngưỡng những tác phẩm hoa lan tuyệt đẹp.
+                        </p>
 
-                            <div className="space-y-4 text-emerald-100 text-sm">
-                                <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-emerald-700/60 rounded-lg text-white">
-                                        <EnvironmentOutlined />
-                                    </div>
-                                    <span>Khu Công Nghệ Cao, TP. Thủ Đức, TP. Hồ Chí Minh</span>
-                                </div>
-
-                                <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-emerald-700/60 rounded-lg text-white">
-                                        <PhoneOutlined />
-                                    </div>
-                                    <span>Hotline / Zalo: 091 937 5697 (Hỗ trợ 24/7)</span>
-                                </div>
-
-                                <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-emerald-700/60 rounded-lg text-white">
-                                        <MailOutlined />
-                                    </div>
-                                    <span>nhuynh1307@gmail.com</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="border-t border-emerald-700 pt-4 text-xs text-emerald-200">
-                            🕒 Giờ mở cửa vườn: 08:00 - 18:00 (Tất cả các ngày trong tuần)
-                        </div>
+                        <ul className="space-y-3 text-sm text-stone-300">
+                            {contactInfo.map((item) => (
+                                <li key={item.text} className="flex items-center gap-3">
+                                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-gold-400/30 bg-gold-400/10 text-gold-400">
+                                        {item.icon}
+                                    </span>
+                                    <span>{item.text}</span>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                </Col>
+
+                    <div className="relative mt-6 flex items-center gap-2 border-t border-gold-400/20 pt-4 text-xs text-gold-200/80">
+                        <ClockCircleOutlined /> Giờ mở cửa vườn: 08:00 - 18:00 (Tất cả các ngày trong tuần)
+                    </div>
+                </div>
 
                 {/* Cột phải: Form liên hệ tư vấn & đăng ký bán lan */}
-                <Col xs={24} md={14}>
-                    <Card className="rounded-3xl shadow-sm border p-4 sm:p-6">
-                        <h3 className="text-xl font-bold text-gray-800 mb-6">Gửi Yêu Cầu Cho Chúng Tôi</h3>
+                <div className="rounded-lg border border-white/8 bg-ink-900 p-5 sm:p-6">
+                    <h2 className="mb-4 font-display text-xl font-bold text-stone-50">Gửi Yêu Cầu Cho Chúng Tôi</h2>
 
-                        <Form form={form} layout="vertical" onFinish={onFinish}>
-                            <Row gutter={16}>
-                                <Col xs={24} sm={12}>
-                                    <Form.Item
-                                        label="Họ và tên"
-                                        name="fullname"
-                                        rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}
-                                    >
-                                        <Input size="large" placeholder="Nguyễn Văn A" />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={12}>
-                                    <Form.Item
-                                        label="Số điện thoại / Zalo"
-                                        name="phone"
-                                        rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
-                                    >
-                                        <Input size="large" placeholder="0912 xxx xxx" />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                    <Form form={form} layout="vertical" onFinish={onFinish}>
+                        <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+                            <Form.Item
+                                label="Họ và tên"
+                                name="fullname"
+                                rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}
+                            >
+                                <Input placeholder="Nguyễn Văn A" />
+                            </Form.Item>
+                            <Form.Item
+                                label="Số điện thoại / Zalo"
+                                name="phone"
+                                rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
+                            >
+                                <Input placeholder="0912 xxx xxx" />
+                            </Form.Item>
 
                             <Form.Item
                                 label="Địa chỉ Email"
@@ -103,7 +93,7 @@ const ContactPage = () => {
                                     { type: 'email', message: 'Email không hợp lệ!' },
                                 ]}
                             >
-                                <Input size="large" placeholder="example@gmail.com" />
+                                <Input placeholder="example@gmail.com" />
                             </Form.Item>
 
                             <Form.Item
@@ -112,7 +102,6 @@ const ContactPage = () => {
                                 rules={[{ required: true, message: 'Vui lòng chọn nhu cầu!' }]}
                             >
                                 <Select
-                                    size="large"
                                     placeholder="Chọn nhu cầu tư vấn"
                                     options={[
                                         { value: 'buy', label: 'Cần tư vấn chọn mua hoa lan phù hợp' },
@@ -122,32 +111,32 @@ const ContactPage = () => {
                                     ]}
                                 />
                             </Form.Item>
+                        </div>
 
-                            <Form.Item
-                                label="Nội dung chi tiết"
-                                name="content"
-                                rules={[{ required: true, message: 'Vui lòng nhập nội dung!' }]}
-                            >
-                                <TextArea
-                                    rows={4}
-                                    placeholder="Mô tả cụ thể về loài lan bạn đang quan tâm hoặc thông tin giò lan muốn ký gửi bán..."
-                                />
-                            </Form.Item>
+                        <Form.Item
+                            label="Nội dung chi tiết"
+                            name="content"
+                            rules={[{ required: true, message: 'Vui lòng nhập nội dung!' }]}
+                        >
+                            <TextArea
+                                rows={4}
+                                placeholder="Mô tả cụ thể về loài lan bạn đang quan tâm hoặc thông tin giò lan muốn ký gửi bán..."
+                            />
+                        </Form.Item>
 
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                icon={<SendOutlined />}
-                                loading={submitting}
-                                size="large"
-                                className="bg-emerald-600 hover:bg-emerald-700 w-full"
-                            >
-                                Gửi Thông Tin Tư Vấn
-                            </Button>
-                        </Form>
-                    </Card>
-                </Col>
-            </Row>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            icon={<SendOutlined />}
+                            loading={submitting}
+                            size="large"
+                            block
+                        >
+                            Gửi Thông Tin Tư Vấn
+                        </Button>
+                    </Form>
+                </div>
+            </div>
         </div>
     );
 };
