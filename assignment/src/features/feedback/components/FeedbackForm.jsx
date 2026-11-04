@@ -25,7 +25,7 @@ const FeedbackForm = ({ orchid, onFeedbackSubmitted }) => {
                         Đăng nhập ngay
                     </Button>
                 }
-                className="rounded-xl"
+                className="rounded-none"
             />
         );
     }
@@ -43,7 +43,7 @@ const FeedbackForm = ({ orchid, onFeedbackSubmitted }) => {
                 description="Theo quy định, mỗi thành viên chỉ được gửi đánh giá và nhận xét một lần duy nhất cho mỗi hoa lan."
                 type="success"
                 showIcon
-                className="rounded-xl"
+                className="rounded-none"
             />
         );
     }
@@ -71,7 +71,7 @@ const FeedbackForm = ({ orchid, onFeedbackSubmitted }) => {
     };
 
     return (
-        <div className="bg-white p-6 rounded-2xl border shadow-sm">
+        <div className="bg-white p-6 rounded-none border shadow-sm">
             <h3 className="text-lg font-bold text-gray-800 mb-4">Gửi đánh giá của bạn</h3>
             <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={{ rating: 5 }}>
                 <Form.Item

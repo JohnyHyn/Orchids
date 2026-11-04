@@ -16,7 +16,7 @@ const OrchidCard = ({ orchid }) => {
     return (
         <Card
             hoverable
-            className="overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col h-full"
+            className="overflow-hidden rounded-none shadow-sm hover:shadow-md transition-all flex flex-col h-full"
             cover={
                 <div className="relative h-56 overflow-hidden bg-gray-100">
                     <img
@@ -25,11 +25,11 @@ const OrchidCard = ({ orchid }) => {
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                     />
                     {orchid.isSpecial && (
-                        <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow">
+                        <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-none shadow">
                             ĐẶC BIỆT
                         </span>
                     )}
-                    <span className="absolute top-3 right-3 bg-emerald-600 text-white text-xs px-2 py-1 rounded shadow">
+                    <span className="absolute top-3 right-3 bg-emerald-600 text-white text-xs px-2 py-1 rounded-none shadow">
                         {orchid.category}
                     </span>
                 </div>

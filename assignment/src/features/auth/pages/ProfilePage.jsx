@@ -33,7 +33,7 @@ const ProfilePage = () => {
 
     return (
         <div className="max-w-2xl mx-auto py-8">
-            <Card className="rounded-2xl shadow-sm border p-4">
+            <Card className="rounded-none shadow-sm border p-4">
                 {/* Header thông tin cá nhân */}
                 <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b mb-6">
                     <Avatar

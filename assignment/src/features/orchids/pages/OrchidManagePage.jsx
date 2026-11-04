@@ -128,7 +128,7 @@ const OrchidManagePage = () => {
                     alt={record.orchidName}
                     width={50}
                     height={50}
-                    className="rounded-lg object-cover"
+                    className="rounded-none object-cover"
                     fallback="https://via.placeholder.com/60?text=Error"
                 />
             ),
@@ -229,7 +229,7 @@ const OrchidManagePage = () => {
                 dataSource={orchids}
                 rowKey="id"
                 loading={loading}
-                className="bg-white rounded-2xl shadow-sm border overflow-hidden"
+                className="bg-white rounded-none shadow-sm border overflow-hidden"
             />
 
             {/* Modal Thêm / Sửa Hoa Lan */}

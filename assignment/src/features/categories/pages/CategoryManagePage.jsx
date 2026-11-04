@@ -148,7 +148,7 @@ const CategoryManagePage = () => {
                 dataSource={categories}
                 rowKey="id"
                 loading={loading}
-                className="bg-white rounded-2xl shadow-sm border overflow-hidden"
+                className="bg-white rounded-none shadow-sm border overflow-hidden"
             />
 
             {/* Modal Thêm / Sửa Danh mục */}

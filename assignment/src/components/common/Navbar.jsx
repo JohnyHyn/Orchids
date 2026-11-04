@@ -52,7 +52,7 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link to="/" className="text-xl font-bold text-emerald-600 flex items-center gap-2 hover:opacity-80">
-                    <span>🌸 Orchid Paradise</span>
+                    <span>Orchid Paradise</span>
                 </Link>
 
                 {/* Menu Điều Hướng */}

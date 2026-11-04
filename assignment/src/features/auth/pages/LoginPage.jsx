@@ -28,8 +28,8 @@ const LoginPage = () => {
     };
     return (
         <div className="flex justify-center items-center py-16">
-            <Card className="w-full max-w-md shadow-xl rounded-2xl p-6 text-center border-emerald-100">
-                <div className="text-4xl mb-3">🌸</div>
+            <Card className="w-full max-w-md shadow-xl rounded-none p-6 text-center border-emerald-100">
+
                 <h2 className="text-2xl font-bold text-gray-800 mb-2">Orchid Paradise</h2>
                 <p className="text-gray-500 text-sm mb-6">
                     Đăng nhập bằng tài khoản Google để tiếp tục. Tài khoản quản trị sẽ tự động nhận diện quyền Admin.

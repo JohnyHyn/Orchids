@@ -31,7 +31,7 @@ const ContactPage = () => {
             <Row gutter={[32, 32]}>
                 {/* Cột trái: Thông tin liên hệ trực tiếp */}
                 <Col xs={24} md={10}>
-                    <div className="bg-emerald-800 text-white p-8 rounded-3xl h-full flex flex-col justify-between shadow-md space-y-8">
+                    <div className="bg-emerald-800 text-white p-8 rounded-none h-full flex flex-col justify-between shadow-md space-y-8">
                         <div>
                             <h3 className="text-2xl font-bold mb-4">Thông Tin Vườn Lan</h3>
                             <p className="text-emerald-100 text-sm leading-relaxed mb-6">
@@ -40,21 +40,21 @@ const ContactPage = () => {
 
                             <div className="space-y-4 text-emerald-100 text-sm">
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-emerald-700/60 rounded-lg text-white">
+                                    <div className="p-2 bg-emerald-700/60 rounded-none text-white">
                                         <EnvironmentOutlined />
                                     </div>
                                     <span>Khu Công Nghệ Cao, TP. Thủ Đức, TP. Hồ Chí Minh</span>
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-emerald-700/60 rounded-lg text-white">
+                                    <div className="p-2 bg-emerald-700/60 rounded-none text-white">
                                         <PhoneOutlined />
                                     </div>
                                     <span>Hotline / Zalo: 091 937 5697 (Hỗ trợ 24/7)</span>
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-emerald-700/60 rounded-lg text-white">
+                                    <div className="p-2 bg-emerald-700/60 rounded-none text-white">
                                         <MailOutlined />
                                     </div>
                                     <span>nhuynh1307@gmail.com</span>
@@ -70,7 +70,7 @@ const ContactPage = () => {
 
                 {/* Cột phải: Form liên hệ tư vấn & đăng ký bán lan */}
                 <Col xs={24} md={14}>
-                    <Card className="rounded-3xl shadow-sm border p-4 sm:p-6">
+                    <Card className="rounded-none shadow-sm border p-4 sm:p-6">
                         <h3 className="text-xl font-bold text-gray-800 mb-6">Gửi Yêu Cầu Cho Chúng Tôi</h3>
 
                         <Form form={form} layout="vertical" onFinish={onFinish}>

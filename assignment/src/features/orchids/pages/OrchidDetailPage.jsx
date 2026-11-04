@@ -114,15 +114,15 @@ const OrchidDetailPage = () => {
             </Button>
 
             {/* Thông tin chính của hoa lan */}
-            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="relative rounded-2xl overflow-hidden bg-gray-100 flex items-center justify-center min-h-[350px]">
+            <div className="bg-white rounded-none p-6 md:p-8 shadow-sm border grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="relative rounded-none overflow-hidden bg-gray-100 flex items-center justify-center min-h-[350px]">
                     <img
                         src={orchid.image || 'https://via.placeholder.com/500?text=No+Image'}
                         alt={orchid.orchidName}
                         className="w-full h-full object-cover max-h-[450px]"
                     />
                     {orchid.isSpecial && (
-                        <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow">
+                        <span className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-none shadow">
                             ĐẶC BIỆT
                         </span>
                     )}

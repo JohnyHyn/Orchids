@@ -53,7 +53,7 @@ const HomePage = () => {
     return (
         <div className="space-y-8">
             {/* Hero Banner giới thiệu */}
-            <div className="bg-emerald-700 text-white rounded-2xl p-8 shadow-sm flex flex-col items-center text-center">
+            <div className="bg-emerald-700 text-white rounded-none p-8 shadow-sm flex flex-col items-center text-center">
                 <h1 className="text-3xl md:text-4xl font-extrabold mb-2">Bộ Sưu Tập Hoa Lan Quý</h1>
                 <p className="text-emerald-100 max-w-2xl text-sm md:text-base">
                     Khám phá những giống lan quý hiếm và tuyệt đẹp. Đăng nhập để cùng cộng đồng chia sẻ cảm nhận và đánh giá.
@@ -61,7 +61,7 @@ const HomePage = () => {
             </div>
 
             {/* Thanh công cụ Tìm kiếm & Lọc (Task 1) */}
-            <div className="bg-white p-4 rounded-xl shadow-sm border flex flex-col md:flex-row items-center gap-4">
+            <div className="bg-white p-4 rounded-none shadow-sm border flex flex-col md:flex-row items-center gap-4">
                 {/* Tìm theo tên */}
                 <div className="flex-1 w-full">
                     <Input

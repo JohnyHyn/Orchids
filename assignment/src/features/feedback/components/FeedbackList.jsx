@@ -96,7 +96,7 @@ const FeedbackList = ({
                     return (
                         <List.Item
                             actions={actions}
-                            className={`p-4 rounded-xl mb-3 border shadow-sm transition-all ${isMyFeedback ? 'bg-emerald-50/60 border-emerald-300' : 'bg-white border-gray-100'
+                            className={`p-4 rounded-none mb-3 border shadow-sm transition-all ${isMyFeedback ? 'bg-emerald-50/60 border-emerald-300' : 'bg-white border-gray-100'
                                 }`}
                         >
                             <List.Item.Meta

@@ -7,8 +7,8 @@ const AboutPage = () => {
     return (
         <div className="max-w-6xl mx-auto space-y-12 py-6">
             {/* Banner giới thiệu */}
-            <div className="bg-gradient-to-r from-emerald-800 to-teal-700 text-white rounded-3xl p-8 md:p-12 shadow-lg text-center">
-                <Tag color="gold" className="text-sm px-3 py-1 mb-4 rounded-full">
+            <div className="bg-gradient-to-r from-emerald-800 to-teal-700 text-white rounded-none p-8 md:p-12 shadow-lg text-center">
+                <Tag color="gold" className="text-sm px-3 py-1 mb-4 rounded-none">
                     Về Chúng Tôi
                 </Tag>
                 <h1 className="text-3xl md:text-5xl font-black mb-4">Orchid Paradise</h1>
@@ -19,7 +19,7 @@ const AboutPage = () => {
             </div>
 
             {/* Số liệu ấn tượng */}
-            <div className="bg-white p-8 rounded-2xl border shadow-sm">
+            <div className="bg-white p-8 rounded-none border shadow-sm">
                 <Row gutter={[24, 24]} className="text-center">
                     <Col xs={12} sm={6}>
                         <Statistic title="Giống Lan Quý" value={150} suffix="+" valueStyle={{ color: '#059669', fontWeight: 'bold' }} />
@@ -45,9 +45,9 @@ const AboutPage = () => {
 
                 <Row gutter={[24, 24]}>
                     <Col xs={24} md={12}>
-                        <Card className="h-full rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                        <Card className="h-full rounded-none shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex gap-4 items-start">
-                                <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600 text-2xl">
+                                <div className="p-3 bg-emerald-50 rounded-none text-emerald-600 text-2xl">
                                     <SafetyCertificateOutlined />
                                 </div>
                                 <div>
@@ -61,9 +61,9 @@ const AboutPage = () => {
                     </Col>
 
                     <Col xs={24} md={12}>
-                        <Card className="h-full rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                        <Card className="h-full rounded-none shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex gap-4 items-start">
-                                <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600 text-2xl">
+                                <div className="p-3 bg-emerald-50 rounded-none text-emerald-600 text-2xl">
                                     <HeartOutlined />
                                 </div>
                                 <div>
@@ -77,9 +77,9 @@ const AboutPage = () => {
                     </Col>
 
                     <Col xs={24} md={12}>
-                        <Card className="h-full rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                        <Card className="h-full rounded-none shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex gap-4 items-start">
-                                <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600 text-2xl">
+                                <div className="p-3 bg-emerald-50 rounded-none text-emerald-600 text-2xl">
                                     <TeamOutlined />
                                 </div>
                                 <div>
@@ -93,9 +93,9 @@ const AboutPage = () => {
                     </Col>
 
                     <Col xs={24} md={12}>
-                        <Card className="h-full rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                        <Card className="h-full rounded-none shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex gap-4 items-start">
-                                <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600 text-2xl">
+                                <div className="p-3 bg-emerald-50 rounded-none text-emerald-600 text-2xl">
                                     <TrophyOutlined />
                                 </div>
                                 <div>
