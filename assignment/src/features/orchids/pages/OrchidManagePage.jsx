@@ -250,7 +250,7 @@ const OrchidManagePage = () => {
                             name="orchidName"
                             rules={[{ required: true, message: 'Vui lòng nhập tên hoa lan!' }]}
                         >
-                            <Input placeholder="Ví dụ: Hoàng Thảo Kèn..." />
+                            <Input placeholder="" />
                         </Form.Item>
 
                         <Form.Item
@@ -271,7 +271,7 @@ const OrchidManagePage = () => {
                             name="price"
                             rules={[{ required: true, message: 'Vui lòng nhập giá bán!' }]}
                         >
-                            <InputNumber min={0} className="w-full" placeholder="Ví dụ: 120" />
+                            <InputNumber min={0} className="w-full" placeholder="" />
                         </Form.Item>
 
                         <Form.Item label="Xuất xứ" name="original">
